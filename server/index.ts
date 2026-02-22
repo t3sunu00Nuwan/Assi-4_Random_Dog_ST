@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction, Express } from 'express';
 import cors from 'cors';
 import dogRoutes from './routes/dogRoutes';
 
-const app: Express = express();
+export const app: Express = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -37,7 +37,9 @@ app.use((_req: Request, res: Response) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`Dog API endpoint: http://localhost:${PORT}/api/dogs/random`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Dog API endpoint: http://localhost:${PORT}/api/dogs/random`);
+  });
+}
